@@ -11,7 +11,7 @@ BLUETOOTH_ENABLE しても対応しているコードが古いもので、Rev. 6
 - [Bluefruit Feather nRF52 Bluefruit LE - nRF52832](https://www.adafruit.com/product/3406)
 - Li-Po Battery (Option)
 
-今なら Adafruit Feather nRF52840 Express の方がいいかも。
+今なら Adafruit Feather nRF52840 Express の方がいいかも。よく知らなくて、これを買ってしまいました。
 
 ### Software
 
@@ -19,7 +19,7 @@ BLUETOOTH_ENABLE しても対応しているコードが古いもので、Rev. 6
 - Arduino 1.8.15
 - Adafruit nRF52 0.21.0
 
-Adafruit nRF52 はこれをいろいろ試した時は 0.22.1 が最新だったんですけれども、それだとコンパイルが通らなかったので、0.21.0 を使ってます。これを書いている2021年7月4日現在では 0.24.0 が最新みたいです。更新早っ。
+Adafruit nRF52 はこれをいろいろ試した時は 0.22.1 が最新だったんですけれども、それだとコンパイルが通らなかったので、0.21.0 を使ってます。これを書いている2021年7月4日現在では 0.24.0 が最新みたいです。
 
 ## 制限事項
 
@@ -35,11 +35,13 @@ Vcc - Vcc
 GND - GND
 SCL - RXD
 
+Qwiic の出力がでているところが基盤の外側にあったので、そこから引き出してます。ケースの中には隙間がなかったので、バッテリーと Bluefruit Feather は底に両面テープで貼り付けてます。
+
 ## QMK の変更
 
 BLUETOOTH_ENABLE のコードを参考にして以下を変更しました。
 
-自分のkeymapのところで以下を変更します。
+自分の keymap の default をコピーしてきて、新しい名前で保存して、そこのところで以下を変更します。
 rules.mk
 次の行を追加
 ```
@@ -126,6 +128,8 @@ consumer 以外は BLUETOOTH_ENABLE で送っていたものに合わせてま�
 ## Bluefruit
 
 Planck_ble.ino を書き込みます。
+Adafruit のサンプルのままだと Mac に接続して Lang1, Lang2 キーが入力できなかったので、reportmap をちょっと書き換えてます。
+基本的には、Planck から送ってきたものをそのまま Bluetooth で送ってます。
 
 ## 使い方
 Bluefruit に LiPo バッテリーをつなぐか、Bluefruit にモバイルバッテリーをつなぐか、Planck にモバイルバッテリーをつなげば動きます。
