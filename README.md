@@ -1,4 +1,5 @@
 # Planck Rev. 6 Bluetooh Support
+![Planck_ble](https://user-images.githubusercontent.com/18656160/124378003-1bb16280-dcea-11eb-8e70-f9ed943762d7.jpg)
 
 BLUETOOTH_ENABLE しても対応しているコードが古いもので、Rev. 6 だと全然動かなくて、そもそも ARM だと動かないみたいだし、QMK のドキュメントの Serial Driver とか UART Driver とか並記されててよくわからないし、そのとおりにしても動かないようなので、いろいろためして動いたので、記録しておきます。
 
@@ -127,13 +128,16 @@ consumer 以外は BLUETOOTH_ENABLE で送っていたものに合わせてま�
 Planck_ble.ino を書き込みます。
 
 ## 使い方
-Bluefruit に LiPo バッテリーをつなぐか、モバイルバッテリーをつなげば動きます。
+Bluefruit に LiPo バッテリーをつなぐか、Bluefruit にモバイルバッテリーをつなぐか、Planck にモバイルバッテリーをつなげば動きます。
+Bluefruit と Planck に同時に外部から電源を供給しないでください。
 
 Mac に接続することしか考えてませんが、Windows などにもつながると思います。
+
+キーと Consumer と Mouse Key に対応しています。
 
 Cmd-1〜4で4箇所に接続できます。
 
 Bluefruit が青い点滅をしている時に Mac から Setting の Bluetooth の Connect で接続します。
 
-Logicool の Flow を擬似的にサポートしています。Flow を Ctrl を押している時のみ有効にしておけば、Alt-Ctrl を押し続けていれば 1台目と2台目の間で切り替えます。
+Logicool の Flow を擬似的にサポートしています。Flow を Ctrl を押している時のみ有効にしておけば、Option-Ctrl を押し続けていれば 1台目と2台目の間で切り替えます。
 Alt-Ctrl を500ms以上押し続けている場合に切り替えているだけですが、それなりに使えます。
