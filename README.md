@@ -125,6 +125,17 @@ host_consumer_send の最後に以下を追加
 ```
 consumer 以外は BLUETOOTH_ENABLE で送っていたものに合わせてますが意味はないです。受け取る側の Arduino とあっていれば大丈夫です。
 
+Dynamic Macro を使用している場合は、うまく Bluetooth 側から送れないようです。その場合は以下の変更を加えます。
+
+quantum/process_keycode/process_dynamic_macro.c の dynamic_macro_play の中の while の中に wait を入れます。50ms ぐらいがよいようです。
+```
+    while (macro_buffer != macro_end) {
+        process_record(macro_buffer);
+        macro_buffer += direction;
+        wait_ms(50);
+    }
+```
+
 ## Bluefruit
 
 Planck_ble.ino を書き込みます。
