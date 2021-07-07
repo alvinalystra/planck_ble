@@ -25,7 +25,6 @@ SOFTWARE.
 #include "class/hid/hid_device.h"
 
 BLEDis bledis;
-BLEHidAdafruit blehid;
 
 #define HIDINPUT(size)          (0x80 | size)
 #define HIDOUTPUT(size)         (0x90 | size)
@@ -93,6 +92,28 @@ uint8_t const hid_report_descriptor[] = {
   TUD_HID_REPORT_DESC_MOUSE   (HID_REPORT_ID(REPORT_ID_MOUSE))
 };
 
+class BLEHidAlvin: public BLEHidAdafruit {
+  public: err_t begin(void) {
+    // keyboard, consumer, mouse
+    uint16_t input_len [] = { sizeof(hid_keyboard_report_t), 2, sizeof(hid_mouse_report_t) };
+    uint16_t output_len[] = { 1 };
+  
+    setReportLen(input_len, output_len, NULL);
+    enableKeyboard(true);
+    enableMouse(true);
+    setReportMap(hid_report_descriptor, sizeof(hid_report_descriptor));
+  
+    VERIFY_STATUS( BLEHidGeneric::begin() );
+  
+    // Attempt to change the connection interval to 11.25-15 ms when starting HID
+    Bluefruit.Periph.setConnInterval(9, 12);
+  
+    return ERROR_NONE;
+  }
+};
+
+BLEHidAlvin blehid;
+
 static int target_connection = 0;
 static char bluetooth_name[4][9] = {
   "Planck 1",
@@ -109,6 +130,7 @@ void setup()
   while (!Serial) {
     delay(10);
   }
+  Serial.println(); 
   Serial.println("Planck BLE");
  
   // Bluetooth
@@ -119,11 +141,10 @@ void setup()
 
   // Configure and Start Device Information Service
   bledis.setManufacturer("OLKB");
-  bledis.setModel("Planck");
+  bledis.setModel("Planck BLE");
   bledis.begin();
 
   // HID Service
-  blehid.setReportMap(hid_report_descriptor, sizeof(hid_report_descriptor));
   blehid.begin();
 
   // Set up and start advertising
@@ -252,7 +273,7 @@ void loop() {
   uint8_t pan = 0;
   uint8_t c;
 
-  if (Serial.available()) {
+  while (Serial.available()) {
     c = getChar();
     if (c == 0xfd) {
       // start
@@ -270,8 +291,10 @@ void loop() {
         for (int i = 0; i < 6; i++) {
           keycode[i] = getChar();
         }
-        if (!convertkey(modifier, keycode)) {
-          blehid.keyboardReport(modifier, keycode);
+        if (Bluefruit.connected()) {
+          if (!convertkey(modifier, keycode)) {
+            blehid.keyboardReport(modifier, keycode);
+          }
         }
         break;
       case 3: // media key
@@ -281,8 +304,10 @@ void loop() {
         mediakey = getChar();
         // skip (only 1 byte media key support)
         c = getChar();
-        mediareport = mediakey;
-        blehid.consumerReport(mediareport);
+        if (Bluefruit.connected()) {
+          mediareport = mediakey;
+          blehid.consumerReport(mediareport);
+        }
         break;
       case 0: // mouse key
         // skip
@@ -293,7 +318,9 @@ void loop() {
         wheel = getChar();
         pan = getChar();
         c = getChar();
-        blehid.mouseReport(BLE_CONN_HANDLE_INVALID, buttons, x, y, wheel, pan);
+        if (Bluefruit.connected()) {
+          blehid.mouseReport(BLE_CONN_HANDLE_INVALID, buttons, x, y, wheel, pan);
+        }
         break;
       }
     }
