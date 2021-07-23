@@ -1,7 +1,7 @@
-# Planck Rev. 6 Bluetooh LE Support
+# Planck Rev. 6 Bluetooh LE Support (Bluefruit Feather nRF52 Bluefruit LE - nRF52832 Version)
 ![Planck_ble](https://user-images.githubusercontent.com/18656160/124378003-1bb16280-dcea-11eb-8e70-f9ed943762d7.jpg)
 
-BLUETOOTH_ENABLE しても対応しているコードが古いもので、Rev. 6 だと全然動かなくて、そもそも ARM だと動かないみたいだし、QMK のドキュメントの Serial Driver とか UART Driver とか並記されててよくわからないし、そのとおりにしても動かないようなので、いろいろためして動いたので、記録しておきます。
+Planck Rev. 6 を Bluetooth 化してみました。いろいろためして動いたので、記録しておきます。
 
 ## 準備するもの
 
