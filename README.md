@@ -1,4 +1,4 @@
-# Planck Rev. 6 Bluetooh Support
+# Planck Rev. 6 Bluetooh LE Support
 ![Planck_ble](https://user-images.githubusercontent.com/18656160/124378003-1bb16280-dcea-11eb-8e70-f9ed943762d7.jpg)
 
 BLUETOOTH_ENABLE しても対応しているコードが古いもので、Rev. 6 だと全然動かなくて、そもそも ARM だと動かないみたいだし、QMK のドキュメントの Serial Driver とか UART Driver とか並記されててよくわからないし、そのとおりにしても動かないようなので、いろいろためして動いたので、記録しておきます。
@@ -7,7 +7,7 @@ BLUETOOTH_ENABLE しても対応しているコードが古いもので、Rev. 6
 
 ### Hardware
 
-- [OLKB Planck Rev. 6 Keyboard](https://drop.com/buy/planck-mechanical-keyboard)
+- [massrop x olkb Planck Rev. 6 Keyboard](https://drop.com/buy/planck-mechanical-keyboard)
 - [Bluefruit Feather nRF52 Bluefruit LE - nRF52832](https://www.adafruit.com/product/3406)
 - Li-Po Battery (Option)
 
@@ -23,8 +23,8 @@ Adafruit nRF52 はこれをいろいろ試した時は 0.22.1 が最新だった
 
 ## 制限事項
 
-- 6KRO だけしかサポートしてません。
-- Flow は 2台しかサポートしてません。
+- 6KRO だけしかサポートしてません。NKRO は Disable しておいてください。
+- Logi Flow は 2台しかサポートしてません。
 
 ## 準備
 
@@ -41,7 +41,7 @@ Qwiic の出力がでているところが基盤の外側にあったので、�
 
 BLUETOOTH_ENABLE のコードを参考にして以下を変更しました。
 
-自分の keymap の default をコピーしてきて、新しい名前で保存して、そこのところで以下を変更します。
+自分の keymap の default をコピーしてきて、新しい名前で保存して、そこで以下を変更します。
 rules.mk
 次の行を追加
 ```
@@ -154,5 +154,5 @@ Cmd-1〜4で4箇所に接続できます。
 
 Bluefruit が青い点滅をしている時に Mac から Setting の Bluetooth の Connect で接続します。
 
-Logicool の Flow を擬似的にサポートしています。Flow を Ctrl を押している時のみ有効にしておけば、Option-Ctrl を押し続けていれば 1台目と2台目の間で切り替えます。
-Alt-Ctrl を500ms以上押し続けている場合に切り替えているだけですが、それなりに使えます。
+Logi の Flow を擬似的にサポートしています。Flow を Ctrl を押している時のみ有効にしておけば、Option-Ctrl を押し続けていれば 1台目と2台目の間で切り替えます。
+-Ctrl を500ms以上押し続けている場合に切り替えているだけですが、それなりに使えます。
