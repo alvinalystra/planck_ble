@@ -138,13 +138,16 @@ quantum/process_keycode/process_dynamic_macro.c の dynamic_macro_play の中の
 
 ## Bluefruit
 
-Planck_ble.ino を書き込みます。
+Arduino 開発環境を使います。
+planck_ble.ino を書き込みます。
 Adafruit のサンプルのままだと Mac に接続して Lang1, Lang2 キーが入力できなかったので、reportmap をちょっと書き換えてます。
 基本的には、Planck から送ってきたものをそのまま Bluetooth で送ってます。
 
 ## 使い方
 Bluefruit に LiPo バッテリーをつなぐか、Bluefruit にモバイルバッテリーをつなぐか、Planck にモバイルバッテリーをつなげば動きます。
 Bluefruit と Planck に同時に外部から電源を供給しないでください。
+Planck が消費電力が大きいようで、LED を消灯していても 400mAh の LiPo で 8時間程度しか動作しません。個人的には、2箇所に Bluetooth で切り替えて接続できれば十分で、あまり外で
+使用することは想定していないので、問題ないですが。
 
 Mac に接続することしか考えてませんが、Windows などにもつながると思います。
 
