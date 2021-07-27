@@ -31,8 +31,11 @@ Adafruit nRF52 はこれをいろいろ試した時は 0.22.1 が最新だった
 Planck Rev. 6 と Bluefruit Feather nRF52 Bluefruit LE - nRF52832 は以下の結線をします。
 
 Planck - Bluefruit
+
 Vcc - Vcc
+
 GND - GND
+
 SCL - RXD
 
 Qwiic の出力がでているところが基盤の外側にあったので、そこから引き出してます。ケースの中には隙間がなかったので、バッテリーと Bluefruit Feather は底に両面テープで貼り付けてます。
